@@ -1,0 +1,13 @@
+html,
+body,
+canvas {
+  background-color: black;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  overflow: hidden;
+  user-select: none;
+  width: 100vw;
+}
