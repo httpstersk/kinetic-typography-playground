@@ -9,7 +9,9 @@ class KineticMaterial extends ShaderMaterial {
       fragmentShader,
       vertexShader,
       uniforms: {
-        resolution: { value: new Vector2(1024, 1024) },
+        resolution: {
+          value: new Vector2(window.innerWidth, window.innerHeight),
+        },
         time: { value: 1.0 },
         color: { value: new Color('red') },
         hasTexture: { value: 0 },

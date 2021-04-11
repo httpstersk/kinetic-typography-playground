@@ -13,7 +13,8 @@ function useRenderTargetTexture() {
   const [scene, target] = useMemo(() => {
     const scene = new Scene();
     scene.background = new Color('#000');
-    const target = new WebGLRenderTarget(1024, 1024, {});
+    const { innerHeight, innerWidth } = window;
+    const target = new WebGLRenderTarget(innerWidth, innerHeight);
     return [scene, target];
   }, []);
 
