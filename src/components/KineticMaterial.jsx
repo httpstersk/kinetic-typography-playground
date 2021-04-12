@@ -9,31 +9,30 @@ class KineticMaterial extends ShaderMaterial {
       fragmentShader,
       vertexShader,
       uniforms: {
-        resolution: {
+        uColor: { value: new Color('red') },
+        uResolution: {
           value: new Vector2(window.innerWidth, window.innerHeight),
         },
-        time: { value: 1.0 },
-        color: { value: new Color('red') },
-        hasTexture: { value: 0 },
         uTexture: { value: null },
+        uTime: { value: 1.0 },
       },
     });
   }
 
   get time() {
-    return this.uniforms.time.value;
+    return this.uniforms.uTime.value;
   }
 
   set time(value) {
-    this.uniforms.time.value = value;
+    this.uniforms.uTime.value = value;
   }
 
   get resolution() {
-    return this.uniforms.resolution.value;
+    return this.uniforms.uResolution.value;
   }
 
   set resolution(value) {
-    this.uniforms.resolution.value = value;
+    this.uniforms.uResolution.value = value;
   }
 
   get map() {
@@ -41,7 +40,6 @@ class KineticMaterial extends ShaderMaterial {
   }
 
   set map(value) {
-    this.uniforms.hasTexture.value = !!value;
     this.uniforms.uTexture.value = value;
   }
 }

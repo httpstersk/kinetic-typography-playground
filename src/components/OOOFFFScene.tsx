@@ -24,7 +24,7 @@ function useRenderTargetTexture() {
       gl.render(scene, camera.current);
       gl.setRenderTarget(null);
 
-      mesh.current.material.uniforms.time.value = clock.getElapsedTime();
+      mesh.current.material.uniforms.uTime.value = clock.getElapsedTime();
     }
   });
 
