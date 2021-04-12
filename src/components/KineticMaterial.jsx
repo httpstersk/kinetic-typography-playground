@@ -1,18 +1,22 @@
 import { extend } from '@react-three/fiber';
-import { Color, ShaderMaterial, Vector2 } from 'three';
+import { Color, DoubleSide, ShaderMaterial, Vector2 } from 'three';
 import fragmentShader from '../shaders/fragment.glsl';
 import vertexShader from '../shaders/vertex.glsl';
+
+const getResolution = () => new Vector2(window.innerWidth, window.innerHeight);
 
 class KineticMaterial extends ShaderMaterial {
   constructor() {
     super({
       fragmentShader,
       vertexShader,
+      defines: {
+        PI: Math.PI,
+      },
+      side: DoubleSide,
       uniforms: {
         uColor: { value: new Color('red') },
-        uResolution: {
-          value: new Vector2(window.innerWidth, window.innerHeight),
-        },
+        uResolution: { value: getResolution() },
         uTexture: { value: null },
         uTime: { value: 1.0 },
       },
