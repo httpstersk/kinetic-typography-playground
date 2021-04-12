@@ -53,11 +53,11 @@ export function OOOFFFScene(props: MeshProps) {
         createPortal(
           <Text
             color={0xffffff}
-            font={Fonts['Raleway']}
-            fontSize={2}
+            font={Fonts['Cabinet Grotesk']}
+            fontSize={1.5}
             lineHeight={0}
           >
-            XO
+            OF
           </Text>,
           scene
         )}
