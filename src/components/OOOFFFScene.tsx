@@ -12,7 +12,7 @@ function useRenderTargetTexture() {
 
   const [scene, target] = useMemo(() => {
     const scene = new Scene();
-    scene.background = new Color('#000');
+    scene.background = new Color(0x000000);
     const { innerHeight, innerWidth } = window;
     const target = new WebGLRenderTarget(innerWidth, innerHeight);
     return [scene, target];
@@ -45,7 +45,7 @@ export function OOOFFFScene(props: MeshProps) {
         position={[0, 0, 5]}
       />
 
-      <Plane args={[5, 5]} attach="geometry" ref={mesh}>
+      <Plane args={[6, 6]} attach="geometry" ref={mesh}>
         <kineticMaterial attach="material" map={texture} />
       </Plane>
 
