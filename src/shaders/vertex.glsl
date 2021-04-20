@@ -1,9 +1,11 @@
 uniform float uTime;
+
 varying vec2 vUv;
 varying vec3 vNormal;
+varying float vWave;
 
 // #pragma glslify: snoise2 = require(glsl-noise/simplex/2d)
-#pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
+// #pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
 // #pragma glslify: snoise4 = require(glsl-noise/simplex/4d)
 // #pragma glslify: cnoise2 = require(glsl-noise/classic/2d)
 // #pragma glslify: cnoise3 = require(glsl-noise/classic/3d)
@@ -15,9 +17,14 @@ varying vec3 vNormal;
 void main() {
   vUv = uv;
   vNormal = normal;
-  vec3 transformed = position;
-  float noise = snoise3(vec3(position.xy, uTime / 10.0)) * 1.0;
-  transformed += normal * noise;
 
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
+  float amplitude = 1.0;
+  float frequency = 0.9;
+  float time = uTime * 2.0;
+  vec3 newPosition = position;
+
+  newPosition.z +=  sin((newPosition.x - newPosition.y) * frequency - time) * amplitude;
+  vWave = newPosition.z;
+
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
 }
