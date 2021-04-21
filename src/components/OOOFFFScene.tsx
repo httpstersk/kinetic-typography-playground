@@ -1,5 +1,6 @@
 import { OrbitControls, Plane, Text } from '@react-three/drei';
 import { createPortal, MeshProps, useFrame } from '@react-three/fiber';
+import { useControls } from 'leva';
 import React, { useMemo, useRef } from 'react';
 import type { Mesh } from 'three';
 import { Color, PerspectiveCamera, Scene, WebGLRenderTarget } from 'three';
@@ -9,6 +10,16 @@ import './KineticMaterial';
 function useRenderTargetTexture() {
   const camera = useRef<PerspectiveCamera>();
   const mesh = useRef<Mesh>();
+
+  const { repeats } = useControls({
+    repeats: {
+      label: 'Repeats',
+      value: 1,
+      min: 1,
+      max: 4,
+      step: 1,
+    },
+  });
 
   const [scene, target] = useMemo(() => {
     const scene = new Scene();
@@ -25,6 +36,7 @@ function useRenderTargetTexture() {
       gl.setRenderTarget(null);
 
       mesh.current.material.uniforms.uTime.value = clock.getElapsedTime();
+      mesh.current.material.uniforms.uRepeat.value = repeats;
     }
   });
 
