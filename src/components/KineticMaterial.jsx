@@ -15,10 +15,11 @@ class KineticMaterial extends ShaderMaterial {
       },
       side: DoubleSide,
       uniforms: {
-        uColor: { value: new Color('red') },
-        uResolution: { value: getResolution() },
-        uTexture: { value: null },
-        uTime: { value: 1.0 },
+        uColor: { type: 'c', value: new Color('red') },
+        uRepeat: { type: 'f', value: 1.0 },
+        uResolution: { type: 'v2', value: getResolution() },
+        uTexture: { type: 't', value: null },
+        uTime: { type: 'f', value: 1.0 },
       },
     });
   }

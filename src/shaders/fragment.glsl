@@ -1,4 +1,5 @@
 uniform vec3 uColor;
+uniform float uRepeat;
 uniform sampler2D uTexture;
 uniform float uTime;
 
@@ -11,7 +12,7 @@ void main() {
   float wave = vWave;
   float shadow = 1.0 - wave;
 
-  vec2 repeat = vec2(1.0, 1.0);
+  vec2 repeat = vec2(uRepeat, uRepeat);
   vec2 uv = fract(vUv * repeat);
   vec3 texture = texture2D(uTexture, uv).rgb;
   vec3 color = texture * shadow;
