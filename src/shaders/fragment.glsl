@@ -1,7 +1,7 @@
 uniform vec3 uColor;
+uniform bool uHasTexture;
 uniform float uRepeats;
 uniform sampler2D uTexture;
-uniform float uHasTexture;
 uniform float uTime;
 
 varying vec3 vNormal;
@@ -17,7 +17,7 @@ void main() {
     vec3 texture = texture2D(uTexture, uv).rgb;
     vec3 color = texture * shadow;
 
-  if (uHasTexture == 1.0) {
+  if (uHasTexture) {
     gl_FragColor = vec4(color, 1.0);
   } else {
     gl_FragColor = vec4(uColor, 1.0);

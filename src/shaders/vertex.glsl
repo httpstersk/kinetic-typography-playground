@@ -1,5 +1,6 @@
-uniform float uTime;
+uniform bool uHasTexture;
 uniform float uRepeats;
+uniform float uTime;
 
 varying vec2 vUv;
 varying vec3 vNormal;
@@ -24,8 +25,10 @@ void main() {
   float time = uTime * 2.0;
   vec3 newPosition = position;
 
-  newPosition.z +=  sin((newPosition.x - newPosition.y) * frequency - time) * amplitude;
-  vWave = newPosition.z;
+  if (uHasTexture) {
+    newPosition.z +=  sin((newPosition.x - newPosition.y) * frequency - time) * amplitude;
+    vWave = newPosition.z;
+  }
 
   gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
 }

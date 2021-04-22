@@ -23,7 +23,7 @@ class KineticMaterialImpl extends ShaderMaterial {
         uRepeats: { value: 1.0 },
         uResolution: { value: getResolution() },
         uTexture: { value: null },
-        uHasTexture: { value: 0.0 },
+        uHasTexture: { value: false },
         uTime: { value: 1.0 },
       },
     });
@@ -70,7 +70,7 @@ class KineticMaterialImpl extends ShaderMaterial {
   }
 
   set map(value) {
-    this.uniforms.uHasTexture.value = !!value ? 1.0 : 0.0;
+    this.uniforms.uHasTexture.value = !!value;
     this.uniforms.uTexture.value = value;
   }
 }
