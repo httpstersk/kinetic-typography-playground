@@ -1,7 +1,7 @@
-import ReactDOM from 'react-dom';
-import React, { Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import React, { Suspense } from 'react';
+import ReactDOM from 'react-dom';
 import { OOOFFFScene } from './components/OOOFFFScene';
 
 function App() {
@@ -10,6 +10,8 @@ function App() {
       <Suspense fallback={null}>
         <OOOFFFScene position={[0, 0, 0]} />
       </Suspense>
+
+      <OrbitControls />
     </Canvas>
   );
 }
