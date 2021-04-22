@@ -6,5 +6,6 @@ declare module '*.glsl' {
 declare module JSX {
   interface IntrinsicElements {
     kineticMaterial: any;
+    kineticMaterialImpl: KineticMaterialType;
   }
 }

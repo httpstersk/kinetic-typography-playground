@@ -1,5 +1,5 @@
 uniform float uTime;
-uniform float uRepeat;
+uniform float uRepeats;
 
 varying vec2 vUv;
 varying vec3 vNormal;

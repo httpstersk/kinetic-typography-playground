@@ -5,21 +5,11 @@ import React, { useMemo, useRef } from 'react';
 import type { Mesh } from 'three';
 import { Color, PerspectiveCamera, Scene, WebGLRenderTarget } from 'three';
 import Fonts from '../fonts';
-import './KineticMaterial';
+import { KineticMaterial } from './KineticMaterial';
 
 function useRenderTargetTexture() {
   const camera = useRef<PerspectiveCamera>();
   const mesh = useRef<Mesh>();
-
-  const { repeats } = useControls({
-    repeats: {
-      label: 'Repeats',
-      value: 1,
-      min: 1,
-      max: 4,
-      step: 1,
-    },
-  });
 
   const [scene, target] = useMemo(() => {
     const scene = new Scene();
@@ -29,14 +19,11 @@ function useRenderTargetTexture() {
     return [scene, target];
   }, []);
 
-  useFrame(({ clock, gl }) => {
+  useFrame(({ gl }) => {
     if (camera.current && mesh.current) {
       gl.setRenderTarget(target);
       gl.render(scene, camera.current);
       gl.setRenderTarget(null);
-
-      mesh.current.material.uniforms.uTime.value = clock.getElapsedTime();
-      mesh.current.material.uniforms.uRepeat.value = repeats;
     }
   });
 
@@ -45,6 +32,15 @@ function useRenderTargetTexture() {
 
 export function OOOFFFScene(props: MeshProps) {
   const { camera, mesh, scene, texture } = useRenderTargetTexture();
+  const { repeats } = useControls({
+    repeats: {
+      label: 'Repeats',
+      value: 1,
+      min: 1,
+      max: 6,
+      step: 1,
+    },
+  });
 
   return (
     <>
@@ -58,7 +54,7 @@ export function OOOFFFScene(props: MeshProps) {
       />
 
       <Plane args={[6, 6]} attach="geometry" ref={mesh}>
-        <kineticMaterial attach="material" map={texture} />
+        <KineticMaterial map={texture} repeats={repeats} />
       </Plane>
 
       {scene &&
