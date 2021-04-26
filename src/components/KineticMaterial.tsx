@@ -20,10 +20,10 @@ class KineticMaterialImpl extends ShaderMaterial {
       side: DoubleSide,
       uniforms: {
         uColor: { value: new Color(0x000fff) },
+        uHasTexture: { value: false },
         uRepeats: { value: 1.0 },
         uResolution: { value: getResolution() },
         uTexture: { value: null },
-        uHasTexture: { value: false },
         uTime: { value: 1.0 },
       },
     });
