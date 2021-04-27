@@ -1,11 +1,12 @@
-import { Plane, Text } from '@react-three/drei';
+import { Box, Plane, Sphere, Text } from '@react-three/drei';
 import { createPortal, MeshProps, useFrame } from '@react-three/fiber';
-import { useControls } from 'leva';
-import React, { useMemo, useRef } from 'react';
+import { buttonGroup, useControls } from 'leva';
+import React, { useMemo, useRef, useState } from 'react';
 import type { Mesh } from 'three';
 import { Color, PerspectiveCamera, Scene, WebGLRenderTarget } from 'three';
 import Fonts from '../fonts';
 import { KineticMaterial } from './KineticMaterial';
+import SwitchGeometry from './SwitchGeometry';
 
 function useRenderTargetTexture() {
   const camera = useRef<PerspectiveCamera>();
@@ -30,7 +31,8 @@ function useRenderTargetTexture() {
   return { camera, mesh, scene, texture: target.texture };
 }
 
-export function OOOFFFScene(props: MeshProps) {
+export const OOOFFFScene = (props: MeshProps) => {
+  const [activeComponent, setActiveComponent] = useState('Plane');
   const { camera, mesh, scene, texture } = useRenderTargetTexture();
   const { fontSize, repeats } = useControls({
     fontSize: {
@@ -47,7 +49,14 @@ export function OOOFFFScene(props: MeshProps) {
       step: 1,
       value: 1,
     },
+    Geometry: buttonGroup({
+      Box: () => setActiveComponent('Box'),
+      Plane: () => setActiveComponent('Plane'),
+      Sphere: () => setActiveComponent('Sphere'),
+    }),
   });
+
+  const material = <KineticMaterial map={texture} repeats={repeats} />;
 
   return (
     <>
@@ -60,9 +69,19 @@ export function OOOFFFScene(props: MeshProps) {
         ref={camera}
       />
 
-      <Plane args={[6, 6]} attach="geometry" ref={mesh}>
-        <KineticMaterial map={texture} repeats={repeats} />
-      </Plane>
+      <SwitchGeometry active={activeComponent}>
+        <Plane args={[6, 6]} attach="geometry" name="Plane" ref={mesh}>
+          {material}
+        </Plane>
+
+        <Box args={[3, 3, 3]} attach="geometry" name="Box" ref={mesh}>
+          {material}
+        </Box>
+
+        <Sphere args={[6]} attach="geometry" name="Sphere" ref={mesh}>
+          {material}
+        </Sphere>
+      </SwitchGeometry>
 
       {scene &&
         createPortal(
@@ -77,4 +96,4 @@ export function OOOFFFScene(props: MeshProps) {
         )}
     </>
   );
-}
+};
