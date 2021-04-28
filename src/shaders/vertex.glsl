@@ -1,3 +1,4 @@
+uniform bool uHasShadow;
 uniform bool uHasTexture;
 uniform float uRepeats;
 uniform float uTime;
