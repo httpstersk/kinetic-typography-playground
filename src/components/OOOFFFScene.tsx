@@ -1,4 +1,4 @@
-import { Box, Plane, Sphere, Text } from '@react-three/drei';
+import { Box, Plane, Sphere, Text, Torus } from '@react-three/drei';
 import { createPortal, MeshProps, useFrame } from '@react-three/fiber';
 import { buttonGroup, useControls } from 'leva';
 import React, { useMemo, useRef, useState } from 'react';
@@ -34,13 +34,20 @@ function useRenderTargetTexture() {
 export const OOOFFFScene = (props: MeshProps) => {
   const [activeComponent, setActiveComponent] = useState('Plane');
   const { camera, mesh, scene, texture } = useRenderTargetTexture();
-  const { fontSize, repeats } = useControls({
+  const { fontSize, geometrySize, repeats } = useControls({
     fontSize: {
       label: 'Font Size',
       min: 0.5,
       max: 6,
       step: 0.1,
       value: 2,
+    },
+    geometrySize: {
+      label: 'Geometry Size',
+      min: 1,
+      max: 10,
+      step: 0.1,
+      value: 3,
     },
     repeats: {
       label: 'Repeats',
@@ -53,6 +60,7 @@ export const OOOFFFScene = (props: MeshProps) => {
       Box: () => setActiveComponent('Box'),
       Plane: () => setActiveComponent('Plane'),
       Sphere: () => setActiveComponent('Sphere'),
+      Torus: () => setActiveComponent('Torus'),
     }),
   });
 
@@ -70,17 +78,46 @@ export const OOOFFFScene = (props: MeshProps) => {
       />
 
       <SwitchGeometry active={activeComponent}>
-        <Plane args={[6, 6]} attach="geometry" name="Plane" ref={mesh}>
+        <Plane
+          args={[geometrySize, geometrySize]}
+          attach="geometry"
+          name="Plane"
+          ref={mesh}
+        >
           {material}
         </Plane>
 
-        <Box args={[3, 3, 3]} attach="geometry" name="Box" ref={mesh}>
+        <Box
+          args={[geometrySize, geometrySize, geometrySize]}
+          attach="geometry"
+          name="Box"
+          ref={mesh}
+        >
           {material}
         </Box>
 
-        <Sphere args={[6]} attach="geometry" name="Sphere" ref={mesh}>
+        <Sphere
+          args={[geometrySize / 2]}
+          attach="geometry"
+          name="Sphere"
+          ref={mesh}
+        >
           {material}
         </Sphere>
+
+        <Torus
+          args={[
+            geometrySize / 2,
+            geometrySize / 4,
+            Math.pow(geometrySize, 2),
+            Math.pow(geometrySize, 3),
+          ]}
+          attach="geometry"
+          name="Torus"
+          ref={mesh}
+        >
+          {material}
+        </Torus>
       </SwitchGeometry>
 
       {scene &&
