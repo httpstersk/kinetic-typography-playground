@@ -33,7 +33,7 @@ function useRenderTargetTexture() {
 
 export const OOOFFFScene = (props: MeshProps) => {
   const [activeComponent, setActiveComponent] = useState('Torus');
-  const [hasShadow, setShadow] = useState(false);
+  const [shadow, setShadow] = useState(true);
   const { camera, mesh, scene, texture } = useRenderTargetTexture();
   const { fontSize, geometrySize, repeats } = useControls({
     fontSize: {
@@ -64,13 +64,13 @@ export const OOOFFFScene = (props: MeshProps) => {
       Torus: () => setActiveComponent('Torus'),
     }),
     Shadow: {
-      value: hasShadow,
+      value: !shadow,
       onChange: () => setShadow((state) => !state),
     },
   });
 
   const material = (
-    <KineticMaterial hasShadow={hasShadow} map={texture} repeats={repeats} />
+    <KineticMaterial map={texture} repeats={repeats} shadow={shadow} />
   );
 
   return (

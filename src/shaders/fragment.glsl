@@ -1,7 +1,7 @@
 uniform vec3 uColor;
-uniform bool uHasShadow;
 uniform bool uHasTexture;
 uniform float uRepeats;
+uniform bool uShadow;
 uniform sampler2D uTexture;
 uniform float uTime;
 
@@ -16,14 +16,13 @@ void main() {
     vec2 repeat = vec2(uRepeats, uRepeats);
     vec2 uv = fract(vUv * repeat);
     vec3 texture = texture2D(uTexture, uv).rgb;
-    vec3 color = texture;
 
-    if (uHasShadow) {
-      color = texture * shadow;
+    if (uShadow) {
+      texture *= shadow;
     }
 
     if (uHasTexture) {
-      gl_FragColor = vec4(color, 1.0);
+      gl_FragColor = vec4(texture, 1.0);
     } else {
       gl_FragColor = vec4(uColor, 1.0);
     }
