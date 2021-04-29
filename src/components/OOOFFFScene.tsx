@@ -1,6 +1,6 @@
 import { Box, Plane, Sphere, Text, Torus } from '@react-three/drei';
 import { createPortal, MeshProps, useFrame } from '@react-three/fiber';
-import { buttonGroup, useControls } from 'leva';
+import { buttonGroup, LevaInputs, useControls } from 'leva';
 import React, { useMemo, useRef, useState } from 'react';
 import type { Mesh } from 'three';
 import { Color, PerspectiveCamera, Scene, WebGLRenderTarget } from 'three';
@@ -36,7 +36,7 @@ export const OOOFFFScene = (props: MeshProps) => {
   const [distortion, setDistortion] = useState(true);
   const [shadow, setShadow] = useState(true);
   const { camera, mesh, scene, texture } = useRenderTargetTexture();
-  const { fontSize, geometrySize, repeats } = useControls({
+  const { fontSize, geometrySize, repeats, text } = useControls({
     fontSize: {
       label: 'Font Size',
       min: 0.5,
@@ -57,6 +57,11 @@ export const OOOFFFScene = (props: MeshProps) => {
       max: 6,
       step: 1,
       value: 6,
+    },
+    text: {
+      label: 'Text',
+      type: LevaInputs.STRING,
+      value: 'OF',
     },
     Geometry: buttonGroup({
       Box: () => setActiveComponent('Box'),
@@ -144,7 +149,7 @@ export const OOOFFFScene = (props: MeshProps) => {
             font={Fonts['Cabinet Grotesk']}
             fontSize={fontSize}
           >
-            OF
+            {text.toUpperCase()}
           </Text>,
           scene
         )}
