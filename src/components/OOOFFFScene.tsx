@@ -1,4 +1,4 @@
-import { Box, Plane, Sphere, Text, Torus } from '@react-three/drei';
+import { Box, Plane, Sphere, Text as DreiText, Torus } from '@react-three/drei';
 import { createPortal, MeshProps, useFrame } from '@react-three/fiber';
 import { buttonGroup, LevaInputs, useControls } from 'leva';
 import React, { useMemo, useRef, useState } from 'react';
@@ -36,7 +36,19 @@ export const OOOFFFScene = (props: MeshProps) => {
   const [distortion, setDistortion] = useState(true);
   const [shadow, setShadow] = useState(true);
   const { camera, mesh, scene, texture } = useRenderTargetTexture();
-  const { fontSize, geometrySize, repeats, text } = useControls({
+  const { fontSize, geometrySize, Repeats, Text } = useControls({
+    Geometry: buttonGroup({
+      Box: () => setActiveComponent('Box'),
+      Plane: () => setActiveComponent('Plane'),
+      Sphere: () => setActiveComponent('Sphere'),
+      Torus: () => setActiveComponent('Torus'),
+    }),
+
+    Text: {
+      type: LevaInputs.STRING,
+      value: 'OF',
+    },
+
     fontSize: {
       label: 'Font Size',
       min: 0.5,
@@ -44,6 +56,7 @@ export const OOOFFFScene = (props: MeshProps) => {
       step: 0.1,
       value: 2,
     },
+
     geometrySize: {
       label: 'Geometry Size',
       min: 1,
@@ -51,28 +64,19 @@ export const OOOFFFScene = (props: MeshProps) => {
       step: 0.1,
       value: 3,
     },
-    repeats: {
-      label: 'Repeats',
+
+    Repeats: {
       min: 1,
       max: 6,
       step: 1,
       value: 6,
     },
-    text: {
-      label: 'Text',
-      type: LevaInputs.STRING,
-      value: 'OF',
-    },
-    Geometry: buttonGroup({
-      Box: () => setActiveComponent('Box'),
-      Plane: () => setActiveComponent('Plane'),
-      Sphere: () => setActiveComponent('Sphere'),
-      Torus: () => setActiveComponent('Torus'),
-    }),
+
     Distortion: {
       value: !distortion,
       onChange: () => setDistortion((state) => !state),
     },
+
     Shadow: {
       value: !shadow,
       onChange: () => setShadow((state) => !state),
@@ -83,7 +87,7 @@ export const OOOFFFScene = (props: MeshProps) => {
     <KineticMaterial
       distortion={distortion}
       map={texture}
-      repeats={repeats}
+      repeats={Repeats}
       shadow={shadow}
     />
   );
@@ -144,13 +148,13 @@ export const OOOFFFScene = (props: MeshProps) => {
 
       {scene &&
         createPortal(
-          <Text
+          <DreiText
             color={0xffffff}
             font={Fonts['Cabinet Grotesk']}
             fontSize={fontSize}
           >
-            {text.toUpperCase()}
-          </Text>,
+            {Text.toUpperCase()}
+          </DreiText>,
           scene
         )}
     </>
