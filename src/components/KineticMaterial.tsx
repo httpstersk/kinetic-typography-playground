@@ -6,6 +6,7 @@ import fragmentShader from '../shaders/fragment.glsl';
 import vertexShader from '../shaders/vertex.glsl';
 
 type KineticMaterialType = JSX.IntrinsicElements['shaderMaterial'] & {
+  distortion: boolean;
   repeats: number;
   shadow: boolean;
   time: number;
@@ -21,6 +22,7 @@ class KineticMaterialImpl extends ShaderMaterial {
       side: DoubleSide,
       uniforms: {
         uColor: { value: new Color(0x000fff) },
+        uDistortion: { value: false },
         uHasTexture: { value: false },
         uRepeats: { value: 1.0 },
         uResolution: { value: getResolution() },
@@ -37,6 +39,14 @@ class KineticMaterialImpl extends ShaderMaterial {
 
   set color(value) {
     this.uniforms.uColor.value = new Color(value);
+  }
+
+  get distortion() {
+    return this.uniforms.uDistortion.value;
+  }
+
+  set distortion(value) {
+    this.uniforms.uDistortion.value = !!value;
   }
 
   get time() {
@@ -88,12 +98,13 @@ class KineticMaterialImpl extends ShaderMaterial {
 extend({ KineticMaterialImpl });
 
 export const KineticMaterial = forwardRef<any, KineticMaterialType & any>(
-  ({ shadow, repeats, ...props }, ref) => {
+  ({ distortion, shadow, repeats, ...props }, ref) => {
     const materialRef = useRef<KineticMaterialType>();
 
     useFrame(({ clock }) => {
       if (materialRef.current) {
         materialRef.current.time = clock.getElapsedTime();
+        materialRef.current.distortion = distortion;
         materialRef.current.repeats = repeats;
         materialRef.current.shadow = shadow;
       }

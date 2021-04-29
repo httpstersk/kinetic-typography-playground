@@ -1,3 +1,4 @@
+uniform bool uDistortion;
 uniform bool uHasTexture;
 uniform float uRepeats;
 uniform float uTime;
@@ -25,7 +26,7 @@ void main() {
   float time = uTime * 2.0;
   vec3 newPosition = position;
 
-  if (uHasTexture) {
+  if (uHasTexture && uDistortion) {
     newPosition.z +=  sin((newPosition.x - newPosition.y) * frequency - time) * amplitude;
     vWave = newPosition.z;
   }

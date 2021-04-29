@@ -33,6 +33,7 @@ function useRenderTargetTexture() {
 
 export const OOOFFFScene = (props: MeshProps) => {
   const [activeComponent, setActiveComponent] = useState('Torus');
+  const [distortion, setDistortion] = useState(true);
   const [shadow, setShadow] = useState(true);
   const { camera, mesh, scene, texture } = useRenderTargetTexture();
   const { fontSize, geometrySize, repeats } = useControls({
@@ -63,6 +64,10 @@ export const OOOFFFScene = (props: MeshProps) => {
       Sphere: () => setActiveComponent('Sphere'),
       Torus: () => setActiveComponent('Torus'),
     }),
+    Distortion: {
+      value: !distortion,
+      onChange: () => setDistortion((state) => !state),
+    },
     Shadow: {
       value: !shadow,
       onChange: () => setShadow((state) => !state),
@@ -70,7 +75,12 @@ export const OOOFFFScene = (props: MeshProps) => {
   });
 
   const material = (
-    <KineticMaterial map={texture} repeats={repeats} shadow={shadow} />
+    <KineticMaterial
+      distortion={distortion}
+      map={texture}
+      repeats={repeats}
+      shadow={shadow}
+    />
   );
 
   return (
