@@ -104,10 +104,9 @@ export const OOOFFFScene = (props: MeshProps) => {
 
     repeats: {
       label: 'Repeats',
-      min: 1,
-      max: 10,
-      step: 1,
-      value: 3,
+      value: { x: 3, y: 3 },
+      x: { min: 1, step: 1 },
+      y: { min: 1, step: 1 },
     },
 
     Distortion: {

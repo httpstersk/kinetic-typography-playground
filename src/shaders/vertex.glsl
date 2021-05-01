@@ -1,6 +1,6 @@
 uniform bool uDistortion;
 uniform bool uHasTexture;
-uniform float uRepeats;
+uniform vec2 uRepeats;
 uniform float uTime;
 
 varying vec2 vUv;
