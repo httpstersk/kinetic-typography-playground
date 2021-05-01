@@ -43,6 +43,7 @@ function useRenderTargetTexture() {
 export const OOOFFFScene = (props: MeshProps) => {
   const [activeComponent, setActiveComponent] = useState('Torus');
   const [distortion, setDistortion] = useState(true);
+  const [rotation, setRotation] = useState(true);
   const [shadow, setShadow] = useState(true);
   const { camera, mesh, scene, texture } = useRenderTargetTexture();
   const {
@@ -114,10 +115,23 @@ export const OOOFFFScene = (props: MeshProps) => {
       onChange: () => setDistortion((state) => !state),
     },
 
+    Rotation: {
+      value: !rotation,
+      onChange: () => setRotation((state) => !state),
+    },
+
     Shadow: {
       value: !shadow,
       onChange: () => setShadow((state) => !state),
     },
+  });
+
+  useFrame(({ clock }) => {
+    if (mesh.current) {
+      if (rotation) {
+        mesh.current.rotation.y = clock.getElapsedTime();
+      }
+    }
   });
 
   const geometryRadius = geometrySize / 2;
