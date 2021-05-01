@@ -1,13 +1,15 @@
 import {
   Box,
+  Circle,
+  Cylinder,
   Icosahedron,
   Plane,
   Sphere,
-  Text as DreiText,
+  Text,
   Torus,
 } from '@react-three/drei';
 import { createPortal, MeshProps, useFrame } from '@react-three/fiber';
-import { buttonGroup, folder, LevaInputs, useControls } from 'leva';
+import { LevaInputs, useControls } from 'leva';
 import React, { useMemo, useRef, useState } from 'react';
 import type { Mesh } from 'three';
 import { Color, PerspectiveCamera, Scene, WebGLRenderTarget } from 'three';
@@ -43,61 +45,81 @@ export const OOOFFFScene = (props: MeshProps) => {
   const [distortion, setDistortion] = useState(true);
   const [shadow, setShadow] = useState(true);
   const { camera, mesh, scene, texture } = useRenderTargetTexture();
-  const { fontSize, geometryDetail, geometrySize, Repeats, Text } = useControls(
-    {
-      Geometry: {
-        value: activeComponent,
-        options: ['Box', 'Icosahedron', 'Plane', 'Sphere', 'Torus'],
-        onChange: setActiveComponent,
-      },
+  const {
+    fontSize,
+    geometryDetail,
+    geometrySize,
+    repeats,
+    text,
+    textColor,
+  } = useControls({
+    Geometry: {
+      value: activeComponent,
+      options: [
+        'Box',
+        'Circle',
+        'Cylinder',
+        'Icosahedron',
+        'Plane',
+        'Sphere',
+        'Torus',
+      ],
+      onChange: setActiveComponent,
+    },
 
-      Text: {
-        type: LevaInputs.STRING,
-        value: 'CREATE',
-      },
+    text: {
+      label: 'Text',
+      type: LevaInputs.STRING,
+      value: 'Create',
+    },
 
-      fontSize: {
-        label: 'Font Size',
-        min: 0.1,
-        max: 6,
-        step: 0.1,
-        value: 1,
-      },
+    textColor: {
+      label: 'Text Color',
+      value: '#fff',
+    },
 
-      geometryDetail: {
-        label: 'Geometry Details',
-        min: 2,
-        max: 32,
-        step: 1,
-        value: 16,
-      },
+    fontSize: {
+      label: 'Font Size',
+      min: 0.1,
+      max: 6,
+      step: 0.1,
+      value: 1,
+    },
 
-      geometrySize: {
-        label: 'Geometry Size',
-        min: 1,
-        max: 10,
-        step: 0.1,
-        value: 3,
-      },
+    geometryDetail: {
+      label: 'Geometry Details',
+      min: 3,
+      max: 64,
+      step: 1,
+      value: 32,
+    },
 
-      Repeats: {
-        min: 1,
-        max: 10,
-        step: 1,
-        value: 6,
-      },
+    geometrySize: {
+      label: 'Geometry Size',
+      min: 1,
+      max: 10,
+      step: 0.1,
+      value: 3,
+    },
 
-      Distortion: {
-        value: !distortion,
-        onChange: () => setDistortion((state) => !state),
-      },
+    repeats: {
+      label: 'Repeats',
+      min: 1,
+      max: 10,
+      step: 1,
+      value: 3,
+    },
 
-      Shadow: {
-        value: !shadow,
-        onChange: () => setShadow((state) => !state),
-      },
-    }
-  );
+    Distortion: {
+      value: !distortion,
+      onChange: () => setDistortion((state) => !state),
+    },
+
+    Shadow: {
+      value: !shadow,
+      onChange: () => setShadow((state) => !state),
+    },
+  });
 
   const geometryRadius = geometrySize / 2;
 
@@ -105,7 +127,7 @@ export const OOOFFFScene = (props: MeshProps) => {
     <KineticMaterial
       distortion={distortion}
       map={texture}
-      repeats={Repeats}
+      repeats={repeats}
       shadow={shadow}
     />
   );
@@ -122,10 +144,6 @@ export const OOOFFFScene = (props: MeshProps) => {
       />
 
       <SwitchGeometry active={activeComponent}>
-        <Plane args={[geometrySize, geometrySize]} name="Plane" ref={mesh}>
-          {material}
-        </Plane>
-
         <Box
           args={[geometrySize, geometrySize, geometrySize]}
           name="Box"
@@ -134,13 +152,26 @@ export const OOOFFFScene = (props: MeshProps) => {
           {material}
         </Box>
 
-        <Sphere
-          args={[geometryRadius, geometryDetail, geometryDetail]}
-          name="Sphere"
+        <Circle
+          args={[geometryRadius, geometryDetail]}
+          name="Circle"
           ref={mesh}
         >
           {material}
-        </Sphere>
+        </Circle>
+
+        <Cylinder
+          args={[
+            geometryRadius,
+            geometryRadius,
+            geometryRadius * 2,
+            geometryDetail,
+          ]}
+          name="Cylinder"
+          ref={mesh}
+        >
+          {material}
+        </Cylinder>
 
         <Icosahedron
           args={[geometryRadius, geometryDetail]}
@@ -150,12 +181,24 @@ export const OOOFFFScene = (props: MeshProps) => {
           {material}
         </Icosahedron>
 
+        <Plane args={[geometrySize, geometrySize]} name="Plane" ref={mesh}>
+          {material}
+        </Plane>
+
+        <Sphere
+          args={[geometryRadius, geometryDetail, geometryDetail]}
+          name="Sphere"
+          ref={mesh}
+        >
+          {material}
+        </Sphere>
+
         <Torus
           args={[
             geometryRadius,
             geometrySize / 4,
-            Math.pow(geometrySize, 2),
-            Math.pow(geometrySize, 3),
+            geometryDetail,
+            geometryDetail * 2,
           ]}
           name="Torus"
           ref={mesh}
@@ -166,13 +209,13 @@ export const OOOFFFScene = (props: MeshProps) => {
 
       {scene &&
         createPortal(
-          <DreiText
-            color={0xffffff}
+          <Text
+            color={textColor}
             font={Fonts['Cabinet Grotesk']}
             fontSize={fontSize}
           >
-            {Text.toUpperCase()}
-          </DreiText>,
+            {text.toUpperCase()}
+          </Text>,
           scene
         )}
     </>

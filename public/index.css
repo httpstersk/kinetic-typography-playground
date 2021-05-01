@@ -1,7 +1,7 @@
 html,
 body,
 canvas {
-  background-color: black;
+  background-color: #000;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   height: 100vh;
   margin: 0;
