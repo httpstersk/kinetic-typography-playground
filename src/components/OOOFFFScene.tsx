@@ -9,7 +9,7 @@ import {
   Torus,
 } from '@react-three/drei';
 import { createPortal, MeshProps, useFrame } from '@react-three/fiber';
-import { LevaInputs, useControls } from 'leva';
+import { buttonGroup, LevaInputs, useControls } from 'leva';
 import React, { useMemo, useRef, useState } from 'react';
 import type { Mesh } from 'three';
 import { Color, PerspectiveCamera, Scene, WebGLRenderTarget } from 'three';
@@ -45,6 +45,7 @@ export const OOOFFFScene = (props: MeshProps) => {
   const [distortion, setDistortion] = useState(true);
   const [rotation, setRotation] = useState(true);
   const [shadow, setShadow] = useState(true);
+  const [speed, setSpeed] = useState(1);
   const { camera, mesh, scene, texture } = useRenderTargetTexture();
   const {
     fontSize,
@@ -120,6 +121,14 @@ export const OOOFFFScene = (props: MeshProps) => {
       onChange: () => setRotation((state) => !state),
     },
 
+    Speed: buttonGroup({
+      '0.25x': () => setSpeed(0.25),
+      '0.5x': () => setSpeed(0.5),
+      '1x': () => setSpeed(1),
+      '2x': () => setSpeed(2),
+      '3x': () => setSpeed(3),
+    }),
+
     Shadow: {
       value: !shadow,
       onChange: () => setShadow((state) => !state),
@@ -129,7 +138,7 @@ export const OOOFFFScene = (props: MeshProps) => {
   useFrame(({ clock }) => {
     if (mesh.current) {
       if (rotation) {
-        mesh.current.rotation.y = clock.getElapsedTime();
+        mesh.current.rotation.y = clock.getElapsedTime() * speed;
       }
     }
   });
