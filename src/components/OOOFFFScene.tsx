@@ -48,7 +48,9 @@ export const OOOFFFScene = (props: MeshProps) => {
   const [speed, setSpeed] = useState(1);
   const { camera, mesh, scene, texture } = useRenderTargetTexture();
   const {
+    amplitude,
     fontSize,
+    frequency,
     geometryDetail,
     geometrySize,
     repeats,
@@ -116,6 +118,22 @@ export const OOOFFFScene = (props: MeshProps) => {
       onChange: () => setDistortion((state) => !state),
     },
 
+    amplitude: {
+      label: 'Amplitude',
+      min: 0.1,
+      max: 6,
+      step: 0.1,
+      value: 1.0,
+    },
+
+    frequency: {
+      label: 'Frequency',
+      min: 0.1,
+      max: 6,
+      step: 0.1,
+      value: 1.0,
+    },
+
     Rotation: {
       value: !rotation,
       onChange: () => setRotation((state) => !state),
@@ -147,8 +165,10 @@ export const OOOFFFScene = (props: MeshProps) => {
 
   const material = (
     <KineticMaterial
+      amplitude={amplitude.toFixed(1)}
       distortion={distortion}
-      map={texture}
+      frequency={frequency.toFixed(1)}
+      texture={texture}
       repeats={repeats}
       shadow={shadow}
     />

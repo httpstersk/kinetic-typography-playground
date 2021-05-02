@@ -6,7 +6,9 @@ import fragmentShader from '../shaders/fragment.glsl';
 import vertexShader from '../shaders/vertex.glsl';
 
 type KineticMaterialType = JSX.IntrinsicElements['shaderMaterial'] & {
+  amplitude: number;
   distortion: boolean;
+  frequency: number;
   repeats: number;
   shadow: boolean;
   time: number;
@@ -21,16 +23,26 @@ class KineticMaterialImpl extends ShaderMaterial {
       fragmentShader,
       side: DoubleSide,
       uniforms: {
+        uAmplitude: { value: 1.0 },
         uColor: { value: new Color(0x000fff) },
         uDistortion: { value: false },
+        uFrequency: { value: 1.0 },
         uHasTexture: { value: false },
-        uRepeats: { value: 1.0 },
+        uRepeats: { value: new Vector2(1.0) },
         uResolution: { value: getResolution() },
         uShadow: { value: false },
         uTexture: { value: null },
         uTime: { value: 1.0 },
       },
     });
+  }
+
+  get amplitude() {
+    return this.uniforms.uAmplitude.value;
+  }
+
+  set amplitude(value) {
+    this.uniforms.uAmplitude.value = value;
   }
 
   get color() {
@@ -49,12 +61,12 @@ class KineticMaterialImpl extends ShaderMaterial {
     this.uniforms.uDistortion.value = !!value;
   }
 
-  get time() {
-    return this.uniforms.uTime.value;
+  get frequency() {
+    return this.uniforms.uFrequency.value;
   }
 
-  set time(value) {
-    this.uniforms.uTime.value = value;
+  set frequency(value) {
+    this.uniforms.uFrequency.value = value;
   }
 
   get repeats() {
@@ -85,26 +97,36 @@ class KineticMaterialImpl extends ShaderMaterial {
     return this.uniforms.uHasTexture.value;
   }
 
-  get map() {
+  get texture() {
     return this.uniforms.uTexture.value;
   }
 
-  set map(value) {
+  set texture(value) {
     this.uniforms.uHasTexture.value = !!value;
     this.uniforms.uTexture.value = value;
+  }
+
+  get time() {
+    return this.uniforms.uTime.value;
+  }
+
+  set time(value) {
+    this.uniforms.uTime.value = value;
   }
 }
 
 extend({ KineticMaterialImpl });
 
 export const KineticMaterial = forwardRef<any, KineticMaterialType & any>(
-  ({ distortion, shadow, repeats, ...props }, ref) => {
+  ({ amplitude, distortion, frequency, shadow, repeats, ...props }, ref) => {
     const materialRef = useRef<KineticMaterialType>();
 
     useFrame(({ clock }) => {
       if (materialRef.current) {
         materialRef.current.time = clock.getElapsedTime();
+        materialRef.current.amplitude = amplitude;
         materialRef.current.distortion = distortion;
+        materialRef.current.frequency = frequency;
         materialRef.current.repeats = repeats;
         materialRef.current.shadow = shadow;
       }

@@ -1,6 +1,7 @@
+uniform float uAmplitude;
 uniform bool uDistortion;
+uniform float uFrequency;
 uniform bool uHasTexture;
-uniform vec2 uRepeats;
 uniform float uTime;
 
 varying vec2 vUv;
@@ -20,14 +21,10 @@ varying float vWave;
 void main() {
   vUv = uv;
   vNormal = normal;
-
-  float amplitude = 1.0;
-  float frequency = 0.9;
-  float time = uTime * 2.0;
   vec3 newPosition = position;
 
   if (uHasTexture && uDistortion) {
-    newPosition.z +=  sin((newPosition.x - newPosition.y) * frequency - time) * amplitude;
+    newPosition.z += sin((newPosition.x - newPosition.y) * uFrequency - uTime) * uAmplitude;
     vWave = newPosition.z;
   }
 
