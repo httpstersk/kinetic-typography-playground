@@ -118,17 +118,20 @@ class KineticMaterialImpl extends ShaderMaterial {
 extend({ KineticMaterialImpl });
 
 export const KineticMaterial = forwardRef<any, KineticMaterialType & any>(
-  ({ amplitude, distortion, frequency, shadow, repeats, ...props }, ref) => {
+  (
+    { amplitude, frequency, repeats, useDistortion, useShadow, ...props },
+    ref
+  ) => {
     const materialRef = useRef<KineticMaterialType>();
 
     useFrame(({ clock }) => {
       if (materialRef.current) {
         materialRef.current.time = clock.getElapsedTime();
         materialRef.current.amplitude = amplitude;
-        materialRef.current.distortion = distortion;
         materialRef.current.frequency = frequency;
         materialRef.current.repeats = repeats;
-        materialRef.current.shadow = shadow;
+        materialRef.current.useDistortion = useDistortion;
+        materialRef.current.useShadow = useShadow;
       }
     });
 
