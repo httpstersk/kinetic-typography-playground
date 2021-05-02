@@ -12,7 +12,12 @@ import { createPortal, MeshProps, useFrame } from '@react-three/fiber';
 import { buttonGroup, LevaInputs, useControls } from 'leva';
 import React, { useMemo, useRef, useState } from 'react';
 import type { Mesh } from 'three';
-import { Color, PerspectiveCamera, Scene, WebGLRenderTarget } from 'three';
+import {
+  Color,
+  PerspectiveCamera,
+  Scene as THREEScene,
+  WebGLRenderTarget,
+} from 'three';
 import Fonts from '../fonts';
 import { KineticMaterial } from './KineticMaterial';
 import SwitchGeometry from './SwitchGeometry';
@@ -22,7 +27,7 @@ function useRenderTargetTexture() {
   const mesh = useRef<Mesh>();
 
   const [scene, target] = useMemo(() => {
-    const scene = new Scene();
+    const scene = new THREEScene();
     scene.background = new Color(0x000000);
     const { innerHeight, innerWidth } = window;
     const target = new WebGLRenderTarget(innerWidth, innerHeight);
@@ -40,11 +45,11 @@ function useRenderTargetTexture() {
   return { camera, mesh, scene, texture: target.texture };
 }
 
-export const OOOFFFScene = (props: MeshProps) => {
+export const Scene = (props: MeshProps) => {
   const [activeComponent, setActiveComponent] = useState('Torus');
-  const [distortion, setDistortion] = useState(true);
+  const [useDistortion, setUseDistortion] = useState(true);
   const [rotation, setRotation] = useState(true);
-  const [shadow, setShadow] = useState(true);
+  const [useShadow, setUseShadow] = useState(true);
   const [speed, setSpeed] = useState(1);
   const { camera, mesh, scene, texture } = useRenderTargetTexture();
   const {
@@ -114,8 +119,8 @@ export const OOOFFFScene = (props: MeshProps) => {
     },
 
     Distortion: {
-      value: !distortion,
-      onChange: () => setDistortion((state) => !state),
+      value: !useDistortion,
+      onChange: () => setUseDistortion((state) => !state),
     },
 
     amplitude: {
@@ -148,8 +153,8 @@ export const OOOFFFScene = (props: MeshProps) => {
     }),
 
     Shadow: {
-      value: !shadow,
-      onChange: () => setShadow((state) => !state),
+      value: !useShadow,
+      onChange: () => setUseShadow((state) => !state),
     },
   });
 
@@ -166,11 +171,11 @@ export const OOOFFFScene = (props: MeshProps) => {
   const material = (
     <KineticMaterial
       amplitude={amplitude.toFixed(1)}
-      distortion={distortion}
       frequency={frequency.toFixed(1)}
-      texture={texture}
       repeats={repeats}
-      shadow={shadow}
+      texture={texture}
+      useDistortion={useDistortion}
+      useShadow={useShadow}
     />
   );
 

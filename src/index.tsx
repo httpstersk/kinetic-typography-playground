@@ -2,7 +2,7 @@ import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import { OOOFFFScene } from './components/OOOFFFScene';
+import { OOOFFFScene } from './components/Scene';
 
 function App() {
   return (

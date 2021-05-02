@@ -7,11 +7,11 @@ import vertexShader from '../shaders/vertex.glsl';
 
 type KineticMaterialType = JSX.IntrinsicElements['shaderMaterial'] & {
   amplitude: number;
-  distortion: boolean;
   frequency: number;
   repeats: number;
-  shadow: boolean;
   time: number;
+  useDistortion: boolean;
+  useShadow: boolean;
 };
 
 const getResolution = () => new Vector2(window.innerWidth, window.innerHeight);
@@ -25,12 +25,12 @@ class KineticMaterialImpl extends ShaderMaterial {
       uniforms: {
         uAmplitude: { value: 1.0 },
         uColor: { value: new Color(0x000fff) },
-        uDistortion: { value: false },
         uFrequency: { value: 1.0 },
         uHasTexture: { value: false },
         uRepeats: { value: new Vector2(1.0) },
         uResolution: { value: getResolution() },
-        uShadow: { value: false },
+        uUseDistortion: { value: false },
+        uUseShadow: { value: false },
         uTexture: { value: null },
         uTime: { value: 1.0 },
       },
@@ -51,14 +51,6 @@ class KineticMaterialImpl extends ShaderMaterial {
 
   set color(value) {
     this.uniforms.uColor.value = new Color(value);
-  }
-
-  get distortion() {
-    return this.uniforms.uDistortion.value;
-  }
-
-  set distortion(value) {
-    this.uniforms.uDistortion.value = !!value;
   }
 
   get frequency() {
@@ -85,14 +77,6 @@ class KineticMaterialImpl extends ShaderMaterial {
     this.uniforms.uResolution.value = value;
   }
 
-  get shadow() {
-    return this.uniforms.uShadow.value;
-  }
-
-  set shadow(value) {
-    this.uniforms.uShadow.value = !!value;
-  }
-
   get hasTexture() {
     return this.uniforms.uHasTexture.value;
   }
@@ -112,6 +96,22 @@ class KineticMaterialImpl extends ShaderMaterial {
 
   set time(value) {
     this.uniforms.uTime.value = value;
+  }
+
+  get useDistortion() {
+    return this.uniforms.uUseDistortion.value;
+  }
+
+  set useDistortion(value) {
+    this.uniforms.uUseDistortion.value = !!value;
+  }
+
+  get useShadow() {
+    return this.uniforms.uUseShadow.value;
+  }
+
+  set useShadow(value) {
+    this.uniforms.uUseShadow.value = !!value;
   }
 }
 
