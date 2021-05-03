@@ -9,7 +9,7 @@ import {
   Torus,
 } from '@react-three/drei';
 import { createPortal, MeshProps, useFrame } from '@react-three/fiber';
-import { buttonGroup, LevaInputs, useControls } from 'leva';
+import { buttonGroup, folder, LevaInputs, useControls } from 'leva';
 import React, { useMemo, useRef, useState } from 'react';
 import type { Mesh } from 'three';
 import {
@@ -118,44 +118,59 @@ export const Scene = (props: MeshProps) => {
       y: { min: 1, step: 1 },
     },
 
-    Distortion: {
-      value: !useDistortion,
-      onChange: () => setUseDistortion((state) => !state),
-    },
+    Distortion: folder(
+      {
+        'Use Distortion': {
+          value: !useDistortion,
+          onChange: () => setUseDistortion((state) => !state),
+        },
 
-    amplitude: {
-      label: 'Amplitude',
-      min: 0.1,
-      max: 6,
-      step: 0.1,
-      value: 1.0,
-    },
+        amplitude: {
+          label: 'Amplitude',
+          min: 0.1,
+          max: 6,
+          step: 0.1,
+          value: 1.0,
+        },
 
-    frequency: {
-      label: 'Frequency',
-      min: 0.1,
-      max: 6,
-      step: 0.1,
-      value: 1.0,
-    },
+        frequency: {
+          label: 'Frequency',
+          min: 0.1,
+          max: 6,
+          step: 0.1,
+          value: 1.0,
+        },
+      },
+      { collapsed: false }
+    ),
 
-    Rotation: {
-      value: !rotation,
-      onChange: () => setRotation((state) => !state),
-    },
+    Rotation: folder(
+      {
+        'Use Rotation': {
+          value: !rotation,
+          onChange: () => setRotation((state) => !state),
+        },
 
-    Speed: buttonGroup({
-      '0.25x': () => setSpeed(0.25),
-      '0.5x': () => setSpeed(0.5),
-      '1x': () => setSpeed(1),
-      '2x': () => setSpeed(2),
-      '3x': () => setSpeed(3),
-    }),
+        Speed: buttonGroup({
+          '0.25x': () => setSpeed(0.25),
+          '0.5x': () => setSpeed(0.5),
+          '1x': () => setSpeed(1),
+          '2x': () => setSpeed(2),
+          '3x': () => setSpeed(3),
+        }),
+      },
+      { collapsed: false }
+    ),
 
-    Shadow: {
-      value: !useShadow,
-      onChange: () => setUseShadow((state) => !state),
-    },
+    Shadow: folder(
+      {
+        'Use Shadow': {
+          value: !useShadow,
+          onChange: () => setUseShadow((state) => !state),
+        },
+      },
+      { collapsed: false }
+    ),
   });
 
   useFrame(({ clock }) => {

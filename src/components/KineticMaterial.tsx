@@ -29,10 +29,10 @@ class KineticMaterialImpl extends ShaderMaterial {
         uHasTexture: { value: false },
         uRepeats: { value: new Vector2(1.0) },
         uResolution: { value: getResolution() },
-        uUseDistortion: { value: false },
-        uUseShadow: { value: false },
         uTexture: { value: null },
         uTime: { value: 1.0 },
+        uUseDistortion: { value: false },
+        uUseShadow: { value: false },
       },
     });
   }

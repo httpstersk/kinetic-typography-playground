@@ -1,11 +1,11 @@
 uniform float uAmplitude;
-uniform bool uUseDistortion;
 uniform float uFrequency;
 uniform bool uHasTexture;
 uniform float uTime;
+uniform bool uUseDistortion;
 
-varying vec2 vUv;
 varying vec3 vNormal;
+varying vec2 vUv;
 varying float vWave;
 
 void main() {
