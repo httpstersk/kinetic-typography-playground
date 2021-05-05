@@ -48,7 +48,9 @@ function useRenderTargetTexture() {
 export const Scene = (props: MeshProps) => {
   const [activeComponent, setActiveComponent] = useState('Torus');
   const [useDistortion, setUseDistortion] = useState(true);
-  const [rotation, setRotation] = useState(true);
+  const [rotationX, setRotationX] = useState(true);
+  const [rotationY, setRotationY] = useState(true);
+  const [rotationZ, setRotationZ] = useState(true);
   const [useShadow, setUseShadow] = useState(true);
   const [speed, setSpeed] = useState(1);
   const { camera, mesh, scene, texture } = useRenderTargetTexture();
@@ -146,9 +148,19 @@ export const Scene = (props: MeshProps) => {
 
     Rotation: folder(
       {
-        'Use Rotation': {
-          value: !rotation,
-          onChange: () => setRotation((state) => !state),
+        'Rotation X': {
+          value: !rotationX,
+          onChange: () => setRotationX((state) => !state),
+        },
+
+        'Rotation Y': {
+          value: !rotationY,
+          onChange: () => setRotationY((state) => !state),
+        },
+
+        'Rotation Z': {
+          value: !rotationZ,
+          onChange: () => setRotationZ((state) => !state),
         },
 
         Speed: buttonGroup({
@@ -175,8 +187,18 @@ export const Scene = (props: MeshProps) => {
 
   useFrame(({ clock }) => {
     if (mesh.current) {
-      if (rotation) {
-        mesh.current.rotation.y = clock.getElapsedTime() * speed;
+      const time = clock.getElapsedTime();
+
+      if (rotationX) {
+        mesh.current.rotation.x = time * speed;
+      }
+
+      if (rotationY) {
+        mesh.current.rotation.y = time * speed;
+      }
+
+      if (rotationZ) {
+        mesh.current.rotation.z = time * speed;
       }
     }
   });

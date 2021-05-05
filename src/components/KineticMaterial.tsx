@@ -1,6 +1,6 @@
 import { extend, useFrame } from '@react-three/fiber';
 import React, { forwardRef, useRef } from 'react';
-import { Color, DoubleSide, ShaderMaterial, Vector2 } from 'three';
+import { Color, DoubleSide, ShaderMaterial, Vector2, Vector3 } from 'three';
 import mergeRefs from 'react-merge-refs';
 import fragmentShader from '../shaders/fragment.glsl';
 import vertexShader from '../shaders/vertex.glsl';
@@ -27,7 +27,7 @@ class KineticMaterialImpl extends ShaderMaterial {
         uColor: { value: new Color(0x000fff) },
         uFrequency: { value: 1.0 },
         uHasTexture: { value: false },
-        uRepeats: { value: new Vector2(1.0) },
+        uRepeats: { value: new Vector3(1.0) },
         uResolution: { value: getResolution() },
         uTexture: { value: null },
         uTime: { value: 1.0 },
