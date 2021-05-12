@@ -53,9 +53,9 @@ export const Scene = (props: MeshProps) => {
   const [rotationZ, setRotationZ] = useState(true);
   const [useShadow, setUseShadow] = useState(true);
   const [speed, setSpeed] = useState(1);
-  const { camera, mesh, scene, texture } = useRenderTargetTexture();
   const {
     amplitude,
+    bgColor,
     fontSize,
     frequency,
     geometryDetail,
@@ -82,11 +82,6 @@ export const Scene = (props: MeshProps) => {
       label: 'Text',
       type: LevaInputs.STRING,
       value: 'Create',
-    },
-
-    textColor: {
-      label: 'Text Color',
-      value: '#fff',
     },
 
     fontSize: {
@@ -119,6 +114,21 @@ export const Scene = (props: MeshProps) => {
       x: { min: 1, step: 1 },
       y: { min: 1, step: 1 },
     },
+
+    Colors: folder(
+      {
+        bgColor: {
+          label: 'Background',
+          value: '#000',
+        },
+
+        textColor: {
+          label: 'Text Color',
+          value: '#fff',
+        },
+      },
+      { collapsed: false }
+    ),
 
     Distortion: folder(
       {
@@ -185,9 +195,15 @@ export const Scene = (props: MeshProps) => {
     ),
   });
 
-  useFrame(({ clock }) => {
+  const { camera, mesh, scene, texture } = useRenderTargetTexture();
+
+  useFrame(({ clock, gl }) => {
     if (mesh.current) {
       const time = clock.getElapsedTime();
+
+      if (bgColor) {
+        gl.setClearColor(bgColor);
+      }
 
       if (rotationX) {
         mesh.current.rotation.x = time * speed;
