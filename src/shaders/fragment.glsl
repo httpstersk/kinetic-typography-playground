@@ -21,7 +21,7 @@ void main() {
     }
 
     if (uHasTexture) {
-      gl_FragColor = vec4(texture, 1.0);
+      gl_FragColor = vec4(texture + uColor, 1.0);
     } else {
       gl_FragColor = vec4(uColor, 1.0);
     }

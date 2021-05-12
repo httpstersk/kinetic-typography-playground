@@ -60,6 +60,7 @@ export const Scene = (props: MeshProps) => {
     frequency,
     geometryDetail,
     geometrySize,
+    materialColor,
     repeats,
     text,
     textColor,
@@ -117,14 +118,19 @@ export const Scene = (props: MeshProps) => {
 
     Colors: folder(
       {
-        bgColor: {
-          label: 'Background',
-          value: '#000',
-        },
-
         textColor: {
           label: 'Text Color',
           value: '#fff',
+        },
+
+        materialColor: {
+          label: 'Material Color',
+          value: '#000',
+        },
+
+        bgColor: {
+          label: 'Background',
+          value: '#000',
         },
       },
       { collapsed: false }
@@ -224,6 +230,7 @@ export const Scene = (props: MeshProps) => {
   const material = (
     <KineticMaterial
       amplitude={amplitude.toFixed(1)}
+      color={materialColor}
       frequency={frequency.toFixed(1)}
       repeats={repeats}
       texture={texture}

@@ -7,6 +7,7 @@ import vertexShader from '../shaders/vertex.glsl';
 
 type KineticMaterialType = JSX.IntrinsicElements['shaderMaterial'] & {
   amplitude: number;
+  color: string;
   frequency: number;
   repeats: number;
   time: number;
@@ -119,7 +120,15 @@ extend({ KineticMaterialImpl });
 
 export const KineticMaterial = forwardRef<any, KineticMaterialType & any>(
   (
-    { amplitude, frequency, repeats, useDistortion, useShadow, ...props },
+    {
+      amplitude,
+      color,
+      frequency,
+      repeats,
+      useDistortion,
+      useShadow,
+      ...props
+    },
     ref
   ) => {
     const materialRef = useRef<KineticMaterialType>();
@@ -128,6 +137,7 @@ export const KineticMaterial = forwardRef<any, KineticMaterialType & any>(
       if (materialRef.current) {
         materialRef.current.time = clock.getElapsedTime();
         materialRef.current.amplitude = amplitude;
+        materialRef.current.color = color;
         materialRef.current.frequency = frequency;
         materialRef.current.repeats = repeats;
         materialRef.current.useDistortion = useDistortion;
