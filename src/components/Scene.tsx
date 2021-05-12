@@ -181,7 +181,7 @@ export const Scene = (props: MeshProps) => {
           onChange: () => setUseShadow((state) => !state),
         },
       },
-      { collapsed: false }
+      { collapsed: true }
     ),
   });
 
