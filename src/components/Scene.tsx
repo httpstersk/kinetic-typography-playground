@@ -24,6 +24,8 @@ import Fonts from '../fonts';
 import { KineticMaterial } from './KineticMaterial';
 import SwitchGeometry from './SwitchGeometry';
 
+const DEFAULT_GEOMETRY = 'Torus';
+
 function useRenderTargetTexture() {
   const camera = useRef<PerspectiveCamera>();
   const mesh = useRef<Mesh>();
@@ -48,7 +50,8 @@ function useRenderTargetTexture() {
 }
 
 export const Scene = (props: MeshProps) => {
-  const [activeComponent, setActiveComponent] = useState('Torus');
+  const [activeComponent, setActiveComponent] = useState(DEFAULT_GEOMETRY);
+  const isRoundedBoxActive = activeComponent === 'RoundedBox';
   const [useDistortion, setUseDistortion] = useState(true);
   const [rotationX, setRotationX] = useState(true);
   const [rotationY, setRotationY] = useState(true);
@@ -58,7 +61,7 @@ export const Scene = (props: MeshProps) => {
   const {
     amplitude,
     bgColor,
-    borderRadius,
+    boxRoundness,
     fontSize,
     frequency,
     geometryDetail,
@@ -120,19 +123,6 @@ export const Scene = (props: MeshProps) => {
       x: { min: 1, step: 1 },
       y: { min: 1, step: 1 },
     },
-
-    Border: folder(
-      {
-        borderRadius: {
-          label: 'Border Radius',
-          min: 0.1,
-          max: 1,
-          step: 0.1,
-          value: 0.1,
-        },
-      },
-      { collapsed: false }
-    ),
 
     Colors: folder(
       {
@@ -213,6 +203,20 @@ export const Scene = (props: MeshProps) => {
         'Use Shadow': {
           value: !useShadow,
           onChange: () => setUseShadow((state) => !state),
+        },
+      },
+      { collapsed: true }
+    ),
+
+    Roundness: folder(
+      {
+        boxRoundness: {
+          disabled: !isRoundedBoxActive,
+          label: 'Box Roundness',
+          min: 0.1,
+          max: 1,
+          step: 0.1,
+          value: 0.1,
         },
       },
       { collapsed: true }
@@ -321,7 +325,7 @@ export const Scene = (props: MeshProps) => {
         <RoundedBox
           args={[geometrySize, geometrySize, geometrySize]}
           name="RoundedBox"
-          radius={borderRadius}
+          radius={boxRoundness}
           smoothness={4}
           ref={mesh}
         >
