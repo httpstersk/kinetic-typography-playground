@@ -82,7 +82,7 @@ export const Scene = (props: MeshProps) => {
     text: {
       label: 'Text',
       type: LevaInputs.STRING,
-      value: 'Create',
+      value: 'Idea',
     },
 
     fontSize: {
