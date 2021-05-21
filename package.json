@@ -1,6 +1,6 @@
 {
   "name": "ooofff-studio-r3f-template",
-  "version": "0.6.8",
+  "version": "0.7.0",
   "main": "snowpack.config.js",
   "scripts": {
     "start": "snowpack dev",

@@ -3,7 +3,9 @@ import {
   Circle,
   Cylinder,
   Icosahedron,
+  Octahedron,
   Plane,
+  RoundedBox,
   Sphere,
   Text,
   Torus,
@@ -56,6 +58,7 @@ export const Scene = (props: MeshProps) => {
   const {
     amplitude,
     bgColor,
+    borderRadius,
     fontSize,
     frequency,
     geometryDetail,
@@ -72,7 +75,9 @@ export const Scene = (props: MeshProps) => {
         'Circle',
         'Cylinder',
         'Icosahedron',
+        'Octahedron',
         'Plane',
+        'RoundedBox',
         'Sphere',
         'Torus',
       ],
@@ -115,6 +120,19 @@ export const Scene = (props: MeshProps) => {
       x: { min: 1, step: 1 },
       y: { min: 1, step: 1 },
     },
+
+    Border: folder(
+      {
+        borderRadius: {
+          label: 'Border Radius',
+          min: 0.1,
+          max: 1,
+          step: 0.1,
+          value: 0.1,
+        },
+      },
+      { collapsed: false }
+    ),
 
     Colors: folder(
       {
@@ -187,7 +205,7 @@ export const Scene = (props: MeshProps) => {
           '3x': () => setSpeed(3),
         }),
       },
-      { collapsed: false }
+      { collapsed: true }
     ),
 
     Shadow: folder(
@@ -288,9 +306,27 @@ export const Scene = (props: MeshProps) => {
           {material}
         </Icosahedron>
 
+        <Octahedron
+          args={[geometryRadius, geometryDetail]}
+          name="Octahedron"
+          ref={mesh}
+        >
+          {material}
+        </Octahedron>
+
         <Plane args={[geometrySize, geometrySize]} name="Plane" ref={mesh}>
           {material}
         </Plane>
+
+        <RoundedBox
+          args={[geometrySize, geometrySize, geometrySize]}
+          name="RoundedBox"
+          radius={borderRadius}
+          smoothness={4}
+          ref={mesh}
+        >
+          {material}
+        </RoundedBox>
 
         <Sphere
           args={[geometryRadius, geometryDetail, geometryDetail]}
