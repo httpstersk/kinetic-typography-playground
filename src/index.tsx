@@ -16,4 +16,4 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('ooofff'));
+ReactDOM.render(<App />, document.getElementById('playground'));
