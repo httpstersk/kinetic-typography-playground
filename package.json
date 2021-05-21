@@ -1,6 +1,6 @@
 {
   "name": "ooofff-studio-r3f-template",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "main": "snowpack.config.js",
   "scripts": {
     "start": "snowpack dev",
@@ -9,20 +9,20 @@
   "devDependencies": {
     "@types/react": "^17.0.6",
     "@types/react-dom": "^17.0.5",
-    "@types/three": "^0.127.1",
+    "@types/three": "^0.128.0",
     "snowpack": "^3.5.0",
     "snowpack-plugin-glslify": "^1.0.0",
     "typescript": "^4.2.4"
   },
   "dependencies": {
-    "@react-three/drei": "^4.3.3",
+    "@react-three/drei": "^5.1.6",
     "@react-three/fiber": "^6.1.5",
     "glsl-noise": "0.0.0",
     "leva": "^0.9.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-merge-refs": "^1.1.0",
-    "three": "^0.127.0",
+    "three": "^0.128.0",
     "troika-three-text": "^0.42.0"
   }
 }
