@@ -2,7 +2,15 @@ import { shaderMaterial } from '@react-three/drei';
 import { extend, useFrame } from '@react-three/fiber';
 import React, { forwardRef, useRef } from 'react';
 import mergeRefs from 'react-merge-refs';
-import { Color, Texture, Vector2, Vector3 } from 'three';
+import {
+  Color,
+  ShaderMaterial,
+  Texture,
+  UniformsLib,
+  UniformsUtils,
+  Vector2,
+  Vector3,
+} from 'three';
 import fragmentShader from '../shaders/fragment.glsl';
 import vertexShader from '../shaders/vertex.glsl';
 
@@ -24,7 +32,7 @@ type KineticMaterialImplementation = KineticMaterialUniforms &
 
 const getResolution = () => new Vector2(window.innerWidth, window.innerHeight);
 
-const uniforms: KineticMaterialUniforms = {
+const kineticMaterialUniforms: KineticMaterialUniforms = {
   uAmplitude: 1.0,
   uColor: new Color(0x000fff),
   uFrequency: 1.0,
@@ -37,10 +45,20 @@ const uniforms: KineticMaterialUniforms = {
   uUseShadow: false,
 };
 
+const onShaderMaterialInit = (material?: ShaderMaterial) => {
+  if (material) {
+    material.uniforms = UniformsUtils.merge([
+      UniformsLib.lights,
+      kineticMaterialUniforms,
+    ]);
+  }
+};
+
 const KineticMaterialImpl = shaderMaterial(
-  uniforms,
+  kineticMaterialUniforms,
   vertexShader,
-  fragmentShader
+  fragmentShader,
+  onShaderMaterialInit
 );
 
 extend({ KineticMaterialImpl });
@@ -82,6 +100,7 @@ export const KineticMaterial = forwardRef<
     return (
       <kineticMaterialImpl
         attach="material"
+        lights
         ref={mergeRefs([ref, materialRef])}
         {...props}
       />
