@@ -251,13 +251,13 @@ export const Scene = (props: MeshProps) => {
 
   const material = (
     <KineticMaterial
-      amplitude={amplitude.toFixed(1)}
-      color={materialColor}
-      frequency={frequency.toFixed(1)}
-      repeats={repeats}
-      texture={texture}
-      useDistortion={useDistortion}
-      useShadow={useShadow}
+      uAmplitude={amplitude.toFixed(1)}
+      uColor={new Color(materialColor)}
+      uFrequency={frequency.toFixed(1)}
+      uRepeats={repeats}
+      uTexture={texture}
+      uUseDistortion={useDistortion}
+      uUseShadow={useShadow}
     />
   );
 
