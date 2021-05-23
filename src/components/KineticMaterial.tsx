@@ -51,6 +51,8 @@ const onShaderMaterialInit = (material?: ShaderMaterial) => {
       UniformsLib.lights,
       kineticMaterialUniforms,
     ]);
+
+    material.uniformsNeedUpdate = true;
   }
 };
 
@@ -100,7 +102,9 @@ export const KineticMaterial = forwardRef<
     return (
       <kineticMaterialImpl
         attach="material"
+        castShadow
         lights
+        receiveShadow
         ref={mergeRefs([ref, materialRef])}
         {...props}
       />

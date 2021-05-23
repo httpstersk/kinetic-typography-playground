@@ -6,7 +6,7 @@ import { Scene } from './components/Scene';
 
 function App() {
   return (
-    <Canvas>
+    <Canvas shadows>
       <Suspense fallback={null}>
         <Scene position={[0, 0, 0]} />
       </Suspense>

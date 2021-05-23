@@ -57,6 +57,7 @@ export const Scene = (props: MeshProps) => {
   const [rotationY, setRotationY] = useState(true);
   const [rotationZ, setRotationZ] = useState(true);
   const [useShadow, setUseShadow] = useState(true);
+  const [wireframe, showWireframe] = useState(true);
   const [speed, setSpeed] = useState(1);
   const {
     amplitude,
@@ -221,6 +222,16 @@ export const Scene = (props: MeshProps) => {
       },
       { collapsed: true }
     ),
+
+    Wireframe: folder(
+      {
+        'Show Wireframe': {
+          value: !wireframe,
+          onChange: () => showWireframe((state) => !state),
+        },
+      },
+      { collapsed: true }
+    ),
   });
 
   const { camera, mesh, scene, texture } = useRenderTargetTexture();
@@ -258,6 +269,7 @@ export const Scene = (props: MeshProps) => {
       uTexture={texture}
       uUseDistortion={useDistortion}
       uUseShadow={useShadow}
+      wireframe={wireframe}
     />
   );
 
@@ -272,10 +284,18 @@ export const Scene = (props: MeshProps) => {
         ref={camera}
       />
 
+      <directionalLight
+        castShadow
+        color={0xffffff}
+        intensity={1.0}
+        position={[-1, 2, -1]}
+      />
+
       <SwitchGeometry active={activeComponent}>
         <Box
           args={[geometrySize, geometrySize, geometrySize]}
           name="Box"
+          receiveShadow
           ref={mesh}
         >
           {material}
@@ -284,6 +304,7 @@ export const Scene = (props: MeshProps) => {
         <Circle
           args={[geometryRadius, geometryDetail]}
           name="Circle"
+          receiveShadow
           ref={mesh}
         >
           {material}
@@ -297,6 +318,7 @@ export const Scene = (props: MeshProps) => {
             geometryDetail,
           ]}
           name="Cylinder"
+          receiveShadow
           ref={mesh}
         >
           {material}
@@ -305,6 +327,7 @@ export const Scene = (props: MeshProps) => {
         <Icosahedron
           args={[geometryRadius, geometryDetail]}
           name="Icosahedron"
+          receiveShadow
           ref={mesh}
         >
           {material}
@@ -313,12 +336,18 @@ export const Scene = (props: MeshProps) => {
         <Octahedron
           args={[geometryRadius, geometryDetail]}
           name="Octahedron"
+          receiveShadow
           ref={mesh}
         >
           {material}
         </Octahedron>
 
-        <Plane args={[geometrySize, geometrySize]} name="Plane" ref={mesh}>
+        <Plane
+          args={[geometrySize, geometrySize]}
+          name="Plane"
+          receiveShadow
+          ref={mesh}
+        >
           {material}
         </Plane>
 
@@ -326,6 +355,7 @@ export const Scene = (props: MeshProps) => {
           args={[geometrySize, geometrySize, geometrySize]}
           name="RoundedBox"
           radius={boxRoundness}
+          receiveShadow
           smoothness={4}
           ref={mesh}
         >
@@ -335,6 +365,7 @@ export const Scene = (props: MeshProps) => {
         <Sphere
           args={[geometryRadius, geometryDetail, geometryDetail]}
           name="Sphere"
+          receiveShadow
           ref={mesh}
         >
           {material}
@@ -347,7 +378,9 @@ export const Scene = (props: MeshProps) => {
             geometryDetail,
             geometryDetail * 2,
           ]}
+          castShadow
           name="Torus"
+          receiveShadow
           ref={mesh}
         >
           {material}
