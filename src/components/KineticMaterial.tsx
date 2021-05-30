@@ -24,7 +24,7 @@ type KineticMaterialUniforms = {
   uTexture: Texture;
   uTime: number;
   uUseDistortion: boolean;
-  uUseShadow: boolean;
+  uUseLight: boolean;
 };
 
 type KineticMaterialImplementation = KineticMaterialUniforms &
@@ -42,7 +42,7 @@ const kineticMaterialUniforms: KineticMaterialUniforms = {
   uTexture: new Texture(),
   uTime: 1.0,
   uUseDistortion: false,
-  uUseShadow: false,
+  uUseLight: false,
 };
 
 const onShaderMaterialInit = (material?: ShaderMaterial) => {
@@ -77,7 +77,7 @@ export const KineticMaterial = forwardRef<
       uHasTexture,
       uRepeats,
       uUseDistortion,
-      uUseShadow,
+      uUseLight,
       uTexture,
       ...props
     },
@@ -95,7 +95,7 @@ export const KineticMaterial = forwardRef<
         materialRef.current.uTime = clock.getElapsedTime();
         materialRef.current.uUseDistortion = uUseDistortion;
         materialRef.current.uTexture = uTexture;
-        materialRef.current.uUseShadow = uUseShadow;
+        materialRef.current.uUseLight = uUseLight;
       }
     });
 

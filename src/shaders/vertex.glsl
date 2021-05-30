@@ -5,12 +5,14 @@ uniform float uTime;
 uniform bool uUseDistortion;
 
 varying vec3 vNormal;
+varying vec3 vPosition;
 varying vec2 vUv;
 varying float vWave;
 
 void main() {
   vUv = uv;
   vNormal = normal;
+  vPosition = position;
   vec3 newPosition = position;
 
   if (uHasTexture && uUseDistortion) {

@@ -56,7 +56,7 @@ export const Scene = (props: MeshProps) => {
   const [rotationX, setRotationX] = useState(true);
   const [rotationY, setRotationY] = useState(true);
   const [rotationZ, setRotationZ] = useState(true);
-  const [useShadow, setUseShadow] = useState(true);
+  const [useLight, setUseLight] = useState(true);
   const [wireframe, showWireframe] = useState(true);
   const [speed, setSpeed] = useState(1);
   const {
@@ -199,11 +199,11 @@ export const Scene = (props: MeshProps) => {
       { collapsed: true }
     ),
 
-    Shadow: folder(
+    Light: folder(
       {
-        'Use Shadow': {
-          value: !useShadow,
-          onChange: () => setUseShadow((state) => !state),
+        'Use Light': {
+          value: !useLight,
+          onChange: () => setUseLight((state) => !state),
         },
       },
       { collapsed: true }
@@ -268,7 +268,7 @@ export const Scene = (props: MeshProps) => {
       uRepeats={repeats}
       uTexture={texture}
       uUseDistortion={useDistortion}
-      uUseShadow={useShadow}
+      uUseLight={useLight}
       wireframe={wireframe}
     />
   );
