@@ -1,5 +1,6 @@
 uniform vec3 uColor;
 uniform bool uHasTexture;
+uniform vec3 uLightPosition;
 uniform vec2 uRepeats;
 uniform sampler2D uTexture;
 uniform float uTime;
@@ -17,7 +18,7 @@ void main() {
     vec3 texture = texture2D(uTexture, uv).rgb;
 
     vec3 lightColor = vec3(1.0, 1.0, 1.0);
-    vec3 lightPosition = vec3(2.0, 2.0, 2.0);
+    vec3 lightPosition = vec3(uLightPosition.x, uLightPosition.y, uLightPosition.z);
     vec3 lightDirection = normalize(lightPosition - vPosition);
 
     vec3 cameraDirection = normalize(cameraPosition - vPosition);

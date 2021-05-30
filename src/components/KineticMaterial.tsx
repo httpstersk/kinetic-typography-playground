@@ -19,7 +19,8 @@ type KineticMaterialUniforms = {
   uColor: Color;
   uFrequency: number;
   uHasTexture: boolean;
-  uRepeats: Vector3;
+  uLightPosition: Vector3;
+  uRepeats: Vector2;
   uResolution: Vector2;
   uTexture: Texture;
   uTime: number;
@@ -37,7 +38,8 @@ const kineticMaterialUniforms: KineticMaterialUniforms = {
   uColor: new Color(0x000fff),
   uFrequency: 1.0,
   uHasTexture: false,
-  uRepeats: new Vector3(1.0),
+  uLightPosition: new Vector3(1.0),
+  uRepeats: new Vector2(1.0),
   uResolution: getResolution(),
   uTexture: new Texture(),
   uTime: 1.0,
@@ -75,6 +77,7 @@ export const KineticMaterial = forwardRef<
       uColor,
       uFrequency,
       uHasTexture,
+      uLightPosition,
       uRepeats,
       uUseDistortion,
       uUseLight,
@@ -91,6 +94,7 @@ export const KineticMaterial = forwardRef<
         materialRef.current.uColor = uColor;
         materialRef.current.uFrequency = uFrequency;
         materialRef.current.uHasTexture = !!uTexture;
+        materialRef.current.uLightPosition = uLightPosition;
         materialRef.current.uRepeats = uRepeats;
         materialRef.current.uTime = clock.getElapsedTime();
         materialRef.current.uUseDistortion = uUseDistortion;

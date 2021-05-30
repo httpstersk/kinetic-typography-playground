@@ -67,6 +67,7 @@ export const Scene = (props: MeshProps) => {
     frequency,
     geometryDetail,
     geometrySize,
+    lightPosition,
     materialColor,
     repeats,
     text,
@@ -205,6 +206,14 @@ export const Scene = (props: MeshProps) => {
           value: !useLight,
           onChange: () => setUseLight((state) => !state),
         },
+
+        lightPosition: {
+          label: 'Light Position',
+          value: { x: 10, y: 10, z: 10 },
+          x: { min: -10, max: 10, step: 1 },
+          y: { min: -10, max: 10, step: 1 },
+          z: { min: -10, max: 10, step: 1 },
+        },
       },
       { collapsed: true }
     ),
@@ -265,6 +274,7 @@ export const Scene = (props: MeshProps) => {
       uAmplitude={amplitude.toFixed(1)}
       uColor={new Color(materialColor)}
       uFrequency={frequency.toFixed(1)}
+      uLightPosition={lightPosition}
       uRepeats={repeats}
       uTexture={texture}
       uUseDistortion={useDistortion}
