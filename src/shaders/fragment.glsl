@@ -3,6 +3,7 @@ uniform bool uHasTexture;
 uniform vec3 uLightPosition;
 uniform vec2 uRepeats;
 uniform sampler2D uTexture;
+uniform float uShininess;
 uniform float uTime;
 uniform bool uUseLight;
 
@@ -24,9 +25,8 @@ void main() {
     vec3 cameraDirection = normalize(cameraPosition - vPosition);
     vec3 reflectionDirection = normalize(lightDirection + cameraDirection);
 
-    float shininess = 1.0;
     float reflectionColor = uUseLight
-      ? pow(max(dot(reflectionDirection, vNormal), 0.0), shininess)
+      ? pow(max(dot(reflectionDirection, vNormal), 0.0), uShininess)
       : 0.0;
 
     if (uHasTexture) {

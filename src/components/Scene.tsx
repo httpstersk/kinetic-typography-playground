@@ -71,6 +71,7 @@ export const Scene = (props: MeshProps) => {
     lightPosition,
     materialColor,
     repeats,
+    shininess,
     text,
     textColor,
   } = useControls({
@@ -198,7 +199,7 @@ export const Scene = (props: MeshProps) => {
           '3x': () => setSpeed(3),
         }),
       },
-      { collapsed: true }
+      { collapsed: false }
     ),
 
     Light: folder(
@@ -206,6 +207,14 @@ export const Scene = (props: MeshProps) => {
         'Use Light': {
           value: !useLight,
           onChange: () => setUseLight((state) => !state),
+        },
+
+        shininess: {
+          label: 'Shininess',
+          min: 1.0,
+          max: 10.0,
+          step: 1.0,
+          value: 1.0,
         },
 
         lightPosition: {
@@ -220,7 +229,7 @@ export const Scene = (props: MeshProps) => {
           z: { min: -LIGHT_POSITION_LIMIT, max: LIGHT_POSITION_LIMIT, step: 1 },
         },
       },
-      { collapsed: true }
+      { collapsed: false }
     ),
 
     Roundness: folder(
@@ -281,6 +290,7 @@ export const Scene = (props: MeshProps) => {
       uFrequency={frequency.toFixed(1)}
       uLightPosition={lightPosition}
       uRepeats={repeats}
+      uShininess={shininess}
       uTexture={texture}
       uUseDistortion={useDistortion}
       uUseLight={useLight}
