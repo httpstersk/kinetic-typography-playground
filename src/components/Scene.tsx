@@ -25,6 +25,7 @@ import { KineticMaterial } from './KineticMaterial';
 import SwitchGeometry from './SwitchGeometry';
 
 const DEFAULT_GEOMETRY = 'Torus';
+const LIGHT_POSITION_LIMIT = 30;
 
 function useRenderTargetTexture() {
   const camera = useRef<PerspectiveCamera>();
@@ -209,10 +210,14 @@ export const Scene = (props: MeshProps) => {
 
         lightPosition: {
           label: 'Light Position',
-          value: { x: 10, y: 10, z: 10 },
-          x: { min: -10, max: 10, step: 1 },
-          y: { min: -10, max: 10, step: 1 },
-          z: { min: -10, max: 10, step: 1 },
+          value: {
+            x: LIGHT_POSITION_LIMIT / 2,
+            y: LIGHT_POSITION_LIMIT / 2,
+            z: LIGHT_POSITION_LIMIT / 2,
+          },
+          x: { min: -LIGHT_POSITION_LIMIT, max: LIGHT_POSITION_LIMIT, step: 1 },
+          y: { min: -LIGHT_POSITION_LIMIT, max: LIGHT_POSITION_LIMIT, step: 1 },
+          z: { min: -LIGHT_POSITION_LIMIT, max: LIGHT_POSITION_LIMIT, step: 1 },
         },
       },
       { collapsed: true }
