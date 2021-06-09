@@ -1,6 +1,6 @@
 # **Kinetic Typography Playground**
 
-> A prototyping tool for kinetic typography enthusiasts! ✨ For now, you can tweak colors and sizes, edit text, rotate and distort geometry, or switch between the different geometries. It's built with [`three.js`](https://github.com/mrdoob/three.js). + [`react-three-fiber`](https://github.com/pmndrs/react-three-fiber) + [`leva`](https://github.com/pmndrs/leva).
+> A prototyping tool for kinetic typography enthusiasts! ✨ For now, you can tweak colors and sizes, edit text, rotate and distort geometry, or switch between the different geometries. It's built with [`three.js`](https://github.com/mrdoob/three.js). + [`react-three-fiber`](https://github.com/pmndrs/react-three-fiber) + [`leva`](https://github.com/pmndrs/leva). **[`Live Version (Netlify)`](https://kinetic-typography-playground.netlify.app/)**
 
 ---
 
@@ -21,5 +21,3 @@ $ npm run start
 ```
 
 ---
-
-## **[`Live (Netlify ↗)`](https://kinetic-typography-playground.netlify.app/)**
