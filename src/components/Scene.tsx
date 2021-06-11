@@ -58,6 +58,7 @@ export const Scene = (props: MeshProps) => {
   const [rotationY, setRotationY] = useState(true);
   const [rotationZ, setRotationZ] = useState(true);
   const [useLight, setUseLight] = useState(true);
+  const [useTextAnimation, setUseTextAnimation] = useState(true);
   const [wireframe, showWireframe] = useState(true);
   const [speed, setSpeed] = useState(1);
   const {
@@ -246,6 +247,16 @@ export const Scene = (props: MeshProps) => {
       { collapsed: true }
     ),
 
+    'Text Animation': folder(
+      {
+        Animate: {
+          value: !useTextAnimation,
+          onChange: () => setUseTextAnimation((state) => !state),
+        },
+      },
+      { collapsed: true }
+    ),
+
     Wireframe: folder(
       {
         'Show Wireframe': {
@@ -261,22 +272,22 @@ export const Scene = (props: MeshProps) => {
 
   useFrame(({ clock, gl }) => {
     if (mesh.current) {
-      const time = clock.getElapsedTime();
+      const time = clock.getElapsedTime() * speed;
 
       if (bgColor) {
         gl.setClearColor(bgColor);
       }
 
       if (rotationX) {
-        mesh.current.rotation.x = time * speed;
+        mesh.current.rotation.x = time;
       }
 
       if (rotationY) {
-        mesh.current.rotation.y = time * speed;
+        mesh.current.rotation.y = time;
       }
 
       if (rotationZ) {
-        mesh.current.rotation.z = time * speed;
+        mesh.current.rotation.z = time;
       }
     }
   });
@@ -294,6 +305,7 @@ export const Scene = (props: MeshProps) => {
       uTexture={texture}
       uUseDistortion={useDistortion}
       uUseLight={useLight}
+      uUseTextAnimation={useTextAnimation}
       wireframe={wireframe}
     />
   );

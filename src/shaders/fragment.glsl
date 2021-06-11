@@ -6,6 +6,7 @@ uniform sampler2D uTexture;
 uniform float uShininess;
 uniform float uTime;
 uniform bool uUseLight;
+uniform bool uUseTextAnimation;
 
 varying vec3 vNormal;
 varying vec3 vPosition;
@@ -15,7 +16,8 @@ varying float vWave;
 void main() {
     float wave = vWave;
     vec2 repeat = vec2(uRepeats.x, uRepeats.y);
-    vec2 uv = fract(vUv * repeat);
+    float animationSpeed = uUseTextAnimation ? uTime * 0.5 : 0.0;
+    vec2 uv = fract(animationSpeed + vUv * repeat);
     vec3 texture = texture2D(uTexture, uv).rgb;
 
     vec3 lightColor = vec3(1.0, 1.0, 1.0);
