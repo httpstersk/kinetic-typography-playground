@@ -23,6 +23,7 @@ type KineticMaterialUniforms = {
   uRepeats: Vector2;
   uResolution: Vector2;
   uShininess: number;
+  uTextSpeed: number;
   uTexture: Texture;
   uTime: number;
   uUseDistortion: boolean;
@@ -44,6 +45,7 @@ const kineticMaterialUniforms: KineticMaterialUniforms = {
   uRepeats: new Vector2(1.0),
   uResolution: getResolution(),
   uShininess: 1.0,
+  uTextSpeed: 0.5,
   uTexture: new Texture(),
   uTime: 1.0,
   uUseDistortion: false,
@@ -84,6 +86,7 @@ export const KineticMaterial = forwardRef<
       uLightPosition,
       uRepeats,
       uShininess,
+      uTextSpeed,
       uUseDistortion,
       uUseLight,
       uUseTextAnimation,
@@ -103,6 +106,7 @@ export const KineticMaterial = forwardRef<
         materialRef.current.uLightPosition = uLightPosition;
         materialRef.current.uRepeats = uRepeats;
         materialRef.current.uShininess = uShininess;
+        materialRef.current.uTextSpeed = uTextSpeed;
         materialRef.current.uTime = clock.getElapsedTime();
         materialRef.current.uUseDistortion = uUseDistortion;
         materialRef.current.uTexture = uTexture;

@@ -75,6 +75,7 @@ export const Scene = (props: MeshProps) => {
     shininess,
     text,
     textColor,
+    textSpeed,
   } = useControls({
     Geometry: {
       value: activeComponent,
@@ -175,6 +176,23 @@ export const Scene = (props: MeshProps) => {
       { collapsed: false }
     ),
 
+    'Text Animation': folder(
+      {
+        Animate: {
+          value: !useTextAnimation,
+          onChange: () => setUseTextAnimation((state) => !state),
+        },
+        textSpeed: {
+          label: 'Speed',
+          min: 0.01,
+          max: 1.0,
+          step: 0.01,
+          value: 0.5,
+        },
+      },
+      { collapsed: false }
+    ),
+
     Rotation: folder(
       {
         'Rotation X': {
@@ -247,16 +265,6 @@ export const Scene = (props: MeshProps) => {
       { collapsed: true }
     ),
 
-    'Text Animation': folder(
-      {
-        Animate: {
-          value: !useTextAnimation,
-          onChange: () => setUseTextAnimation((state) => !state),
-        },
-      },
-      { collapsed: true }
-    ),
-
     Wireframe: folder(
       {
         'Show Wireframe': {
@@ -272,22 +280,22 @@ export const Scene = (props: MeshProps) => {
 
   useFrame(({ clock, gl }) => {
     if (mesh.current) {
-      const time = clock.getElapsedTime() * speed;
+      const time = clock.getElapsedTime();
 
       if (bgColor) {
         gl.setClearColor(bgColor);
       }
 
       if (rotationX) {
-        mesh.current.rotation.x = time;
+        mesh.current.rotation.x = time * speed;
       }
 
       if (rotationY) {
-        mesh.current.rotation.y = time;
+        mesh.current.rotation.y = time * speed;
       }
 
       if (rotationZ) {
-        mesh.current.rotation.z = time;
+        mesh.current.rotation.z = time * speed;
       }
     }
   });
@@ -302,6 +310,7 @@ export const Scene = (props: MeshProps) => {
       uLightPosition={lightPosition}
       uRepeats={repeats}
       uShininess={shininess}
+      uTextSpeed={textSpeed}
       uTexture={texture}
       uUseDistortion={useDistortion}
       uUseLight={useLight}
