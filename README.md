@@ -16,12 +16,10 @@ $ npm install && npm run start
 
 ## Editable Version
 
-#### **[`Glitch ⤴`](https://glitch.com/edit/#!/spectrum-gem-frill)**
+#### **[`Edit on Glitch`](https://glitch.com/edit/#!/spectrum-gem-frill)**
 
 ---
 
 ## Live Version
 
-#### **[`Glitch ⤴`](https://spectrum-gem-frill.glitch.me/)**
-
-#### **[`Netlify ⤴`](https://kinetic-typography-playground.netlify.app/)**
+#### **[`Glitch`](https://spectrum-gem-frill.glitch.me/)** / **[`Netlify`](https://kinetic-typography-playground.netlify.app/)**
