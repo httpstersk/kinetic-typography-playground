@@ -1,6 +1,6 @@
 {
   "name": "kinetic-typography-playground",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "snowpack.config.js",
   "scripts": {
     "start": "snowpack dev",

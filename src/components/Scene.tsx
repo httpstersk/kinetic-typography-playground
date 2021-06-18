@@ -147,7 +147,10 @@ export const Scene = (props: MeshProps) => {
           value: '#000',
         },
       },
-      { collapsed: false }
+      {
+        collapsed: false,
+        color: 'gold',
+      }
     ),
 
     Distortion: folder(
@@ -173,7 +176,10 @@ export const Scene = (props: MeshProps) => {
           value: 1.0,
         },
       },
-      { collapsed: false }
+      {
+        collapsed: false,
+        color: 'deeppink',
+      }
     ),
 
     'Text Animation': folder(
@@ -190,7 +196,10 @@ export const Scene = (props: MeshProps) => {
           value: 0.5,
         },
       },
-      { collapsed: false }
+      {
+        collapsed: false,
+        color: 'aqua',
+      }
     ),
 
     Rotation: folder(
@@ -218,7 +227,10 @@ export const Scene = (props: MeshProps) => {
           '3x': () => setSpeed(3),
         }),
       },
-      { collapsed: false }
+      {
+        collapsed: false,
+        color: 'aquamarine',
+      }
     ),
 
     Light: folder(
@@ -248,7 +260,10 @@ export const Scene = (props: MeshProps) => {
           z: { min: -LIGHT_POSITION_LIMIT, max: LIGHT_POSITION_LIMIT, step: 1 },
         },
       },
-      { collapsed: false }
+      {
+        collapsed: false,
+        color: 'violet',
+      }
     ),
 
     Roundness: folder(
@@ -262,7 +277,10 @@ export const Scene = (props: MeshProps) => {
           value: 0.1,
         },
       },
-      { collapsed: true }
+      {
+        collapsed: true,
+        color: 'coral',
+      }
     ),
 
     Wireframe: folder(
@@ -272,7 +290,10 @@ export const Scene = (props: MeshProps) => {
           onChange: () => showWireframe((state) => !state),
         },
       },
-      { collapsed: true }
+      {
+        collapsed: true,
+        color: 'deepskyblue',
+      }
     ),
   });
 
